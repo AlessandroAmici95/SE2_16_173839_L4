@@ -7,15 +7,31 @@
    </head>
    <body>
        
-       <h1>(:name:)</h1>
-       <b>(:surname:) - (:level:)</b>
+       <h1>Employee Manager</h1>
+	   <form id="searchEmployeeForm" method="POST">
+		   <label>Insert an employee's ID </label>
+		   <input type="text" name="employeeId"/>
+		   <input type="submit" value="search employee" name="search"/>
+		   <input type="submit" value="delete employee" name="delete"/>
+	   </form>
+	   <button id="toggleInsertEmployeeForm" onclick="toggleForm('insertEmployeeForm')">show/hide insert form</button>
+	   
+	   <form id="insertEmployeeForm" method="POST" style="display: none">
+		   <label>ID</label>
+		   <input type=text name="id" value="(: :)"/><br>
+		   <label>Name</label>
+		   <input type=text name="name" value="(: :)"/><br>
+		   <label>Surname</label>
+		   <input type=text name="surname" value="(: :)"/><br>
+		   <label>Level</label>
+		   <input type=text name="level" value="(: :)"/><br>
+		   <label>Salary</label>
+		   <input type=text name="salary" value="(: :)"/><br>
+		   <input type="submit" value="insert employee" name="insert"/>
+
+	   </form>
+       
     
-    <br>
-       
-    (:if[resident] ~
-        [:then ~ <font color="green"> sei residente </font> :]
-        [:else ~ <font color="red"> non sei residente</font> :]
-    :)
-       
+	   <script src="/script/client_script1.js"></script>
     </body>
 </html>

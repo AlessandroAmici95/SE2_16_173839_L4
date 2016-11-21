@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/AlessandroAmici95/SE2_16_173839_L4#readme",
   "dependencies": {
-    "bind": "^0.1.7"
+    "bind": "^0.1.7",
+    "express": "^4.14.0"
   }
 }
