@@ -4,7 +4,12 @@ var toggleForm = function(formID){
 		form.style.display = 'none';
 	}
 	else{
-		form.reset();
+        var elements = form.elements;
+        for(i in elements){
+        	if(elements[i].type != 'submit'){
+                elements[i].value = '';
+			}
+        }
 		form.style.display = 'block';
 	}
 };
