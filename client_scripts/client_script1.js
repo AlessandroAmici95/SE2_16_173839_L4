@@ -4,6 +4,7 @@ var toggleForm = function(formID){
 		form.style.display = 'none';
 	}
 	else{
+		form.reset();
 		form.style.display = 'block';
 	}
 };

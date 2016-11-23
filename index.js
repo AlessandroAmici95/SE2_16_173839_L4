@@ -6,12 +6,54 @@ var datamanger = require('./datamanager.js');
 						 
 //import il modulo per la gestione dei template: VIEW
 var bind = require('bind');
-
+var searchFormId = 'searchEmployeeForm';
+var insertFormId = 'insertEmployeeForm';
 //var miomodulo = require("./modulo.js");
 
+var employer = new datamanger.Employer();
+employer.insertUpdateEmployee(new datamanger.Employee('', 'Mario', 'Rossi', 1,100));
+employer.insertUpdateEmployee(new datamanger.Employee('', 'Marco', 'Bianchi', 2,200));
+employer.insertUpdateEmployee(new datamanger.Employee('', 'Luca', 'Neri', 3,300));
+employer.insertUpdateEmployee(new datamanger.Employee('', 'Alessio', 'Riva', 4,400));
 
+var searchEmployee = function(searchFormId){
+    var form =
+    employer.getEmployeeFromId(searchFormId);
+};
 
-var emp = new datamanger.Employee(5,'carlo', 'bianchi', 3, 1000);
+var deleteEmployee = function(empId, response){
+    var message = employer.deleteEmployeeFromId(parseInt(empId));
+    bind.toFile('tpl/home.tpl',{
+        'message' : message
+        },
+        function(data){
+            //HTML head(type of the page)
+            response.writeHead(200, {'Content-Type': 'html'});
+            //HTML content
+            response.end(data);
+        });
+};
+
+var insertEmployee = function(employee, response){
+    var message;
+    if(employer.insertUpdateEmployee(employee)){
+        message = 'Employee inserito con successo';
+    }
+    else{
+        message ='Employee non inserito, controlla i dati!';
+    }
+    bind.toFile('tpl/home.tpl',{
+        'message' : message
+    },
+    function(data){
+        //HTML head(type of the page)
+        response.writeHead(200, {'Content-Type': 'html'});
+        //HTML content
+        response.end(data);
+    });
+};
+
+var emp = new datamanger.Employee('', '', '', '', '');
 
 //instantiate express
 var app = express(); 
@@ -25,26 +67,43 @@ app.use('/script',express.static('client_scripts'));
 //create a server
 app.get('/', function(request, response) 
 {
-	bind.toFile('tpl/home.tpl',emp,
+    bind.toFile('tpl/home.tpl',emp,
     function(data){
         //HTML head(type of the page)
         response.writeHead(200, {'Content-Type': 'html'});
         //HTML content
         response.end(data);
     });
-  	
 });
+
+
+//POST
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //create a server
 app.post('/', function(request, response) 
 {
-	bind.toFile('tpl/home.tpl',emp,
-    function(data){
-        //HTML head(type of the page)
-        response.writeHead(200, {'Content-Type': 'html'});
-        //HTML content
-        response.end(data);
-    });
+    //se la request ha un body -> controllo che form è stato compilato
+    if ( typeof request.body !== 'undefined' && request.body)
+    {
+        if ( typeof request.body.search !== 'undefined' && request.body.search){
+            searchEmployee(request.body.employeeId);
+            console.log('search');
+        }
+        else if(typeof request.body.delete !== 'undefined' && request.body.delete){
+            deleteEmployee(request.body.employeeId, response);
+            console.log('delete');
+
+        }
+        else if(typeof request.body.insert !== 'undefined' && request.body.insert){
+            var rb = request.body;
+            console.log(new Number(rb.id) + "  " + rb.empname + "  " +  rb.surname + "  " +  new Number(rb.level) + "  " +   new Number(rb.salary));
+            var emp = new datamanger.Employee(new Number(rb.id), rb.empname, rb.surname, new Number(rb.level), new Number(rb.salary));
+            insertEmployee(emp,response);
+            console.log('insert');
+        }
+    }
 });
 
  
