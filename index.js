@@ -23,7 +23,6 @@ var searchEmployee = function(employeeId, response){
     var message = "";
     var visibility = 'block';
     if(emp.ID == '' ){
-        visibility = 'none';
         message =  "Non sono riuscito a trovare l'employee con id = " + employeeId;
     }
     console.log("id cercato = " + emp.ID);
@@ -125,7 +124,10 @@ app.post('/', function(request, response)
         else if(typeof request.body.insert !== 'undefined' && request.body.insert){
             var rb = request.body;
             //console.log( Number(rb.id) + "  " + rb.empname + "  " +  rb.surname + "  " +  Number(rb.level) + "  " +   Number(rb.salary));
-            var emp = new datamanger.Employee(Number(rb.id), rb.empname, rb.surname, Number(rb.level), Number(rb.salary));
+            if (rb.id != '')
+                rb.id = Number(rb.id)
+
+            var emp = new datamanger.Employee(rb.id, rb.empname, rb.surname, Number(rb.level), Number(rb.salary));
             insertEmployee(emp,response);
             console.log('insert');
         }
