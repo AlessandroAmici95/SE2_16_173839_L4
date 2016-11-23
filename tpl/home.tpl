@@ -17,7 +17,7 @@
 	   </form>
 	   <button id="toggleInsertEmployeeForm" onclick="toggleForm('insertEmployeeForm')">show/hide insert form</button>
 	   
-	   <form id="insertEmployeeForm" method="POST" style="display: none">
+	   <form id="insertEmployeeForm" method="POST" style="display:(:visibility ~ none:)">
 		   <label>ID</label>
 		   <input type=text name="id" value="(: ID :)"/><br>
 		   <label>Name</label>

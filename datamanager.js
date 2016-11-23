@@ -128,7 +128,7 @@ function Employer(){
 		var emp;
 		var index = this.getIndexOfEmployeeId(empId);
 		if( index == -1){
-			emp = new Employee(0,0,0,0,0);
+			emp = new Employee('','','','','');
 		}
 		else{
 			return this.employeeList[index];
