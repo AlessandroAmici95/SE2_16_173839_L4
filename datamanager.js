@@ -24,8 +24,8 @@ var isAlphaString = function(str){
 
 var isEmptyString = function(str){
 	var result = true;
-	if(!isFinite(new Number(str))){
-        result =  !(str.replace("\s", "").length > 0);
+	if(typeof str === 'string'){
+        result =  !(str.replace(/\s/g, "").length > 0);
 	}
 	else{
 		result  = false;
@@ -52,11 +52,18 @@ function Employee(ID, name, surname, level, salary){
 
 	this.isValid = function(){ //dice se i dati dell'employee sono corretti
 		var result  = false;
+		console.log('A');
+		console.log(this.ID);
 		if(isEmptyString(this.ID) || isPositiveInteger(this.ID)){
+            console.log('B');
 			if(isPositiveInteger(this.level)){
+                console.log('C');
 				if(isPositiveInteger(this.salary)){
+                    console.log('D');
 					if(isAlphaString(this.name)){
+                        console.log('E');
 						if(isAlphaString(this.surname)){
+                            console.log('F');
 							result = true;
 						}
 					}

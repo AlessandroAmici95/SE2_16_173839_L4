@@ -10,6 +10,8 @@ var searchFormId = 'searchEmployeeForm';
 var insertFormId = 'insertEmployeeForm';
 //var miomodulo = require("./modulo.js");
 
+console.log("ciao amico".replace(/\s/g, ""));
+
 var employer = new datamanger.Employer();
 employer.insertUpdateEmployee(new datamanger.Employee('', 'Mario', 'Rossi', 1,100));
 employer.insertUpdateEmployee(new datamanger.Employee('', 'Marco', 'Bianchi', 2,200));
@@ -98,8 +100,8 @@ app.post('/', function(request, response)
         }
         else if(typeof request.body.insert !== 'undefined' && request.body.insert){
             var rb = request.body;
-            console.log(new Number(rb.id) + "  " + rb.empname + "  " +  rb.surname + "  " +  new Number(rb.level) + "  " +   new Number(rb.salary));
-            var emp = new datamanger.Employee(new Number(rb.id), rb.empname, rb.surname, new Number(rb.level), new Number(rb.salary));
+            console.log( Number(rb.id) + "  " + rb.empname + "  " +  rb.surname + "  " +  Number(rb.level) + "  " +   Number(rb.salary));
+            var emp = new datamanger.Employee(Number(rb.id), rb.empname, rb.surname, Number(rb.level), Number(rb.salary));
             insertEmployee(emp,response);
             console.log('insert');
         }
